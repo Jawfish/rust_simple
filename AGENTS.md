@@ -50,9 +50,9 @@ Prioritize code correctness and clarity. Speed and efficiency are secondary prio
 
 - **Philosophy**: "Every comment represents a failure to express ourself in code."
 - **Hierarchy of Clarity**:
-  1.  **Refactor**: Prioritize renaming or restructuring code to be self-describing.
-  2.  **Explain "Why"**: If code cannot be simplified further, comment on _why_ it is written that way (e.g., specific constraints, edge cases).
-  3.  **Explain "What"**: Only comment on _what_ code does if the complexity is essential and cannot be reduced, and the logic remains non-obvious.
+  1. **Refactor**: Prioritize renaming or restructuring code to be self-describing.
+  2. **Explain "Why"**: If code cannot be simplified further, comment on _why_ it is written that way (e.g., specific constraints, edge cases).
+  3. **Explain "What"**: Only comment on _what_ code does if the complexity is essential and cannot be reduced, and the logic remains non-obvious.
 - **Avoid**: Do not write organizational comments or summaries of obvious logic.
 
 ### Strictness & Lints
@@ -92,6 +92,7 @@ Formatting is enforced automatically. Do not manually align imports or variables
 
 - Use variable shadowing to scope clones in async contexts for clarity, minimizing the lifetime of borrowed references.
   Example:
+
   ```rust
   tokio::spawn({
       let state = state.clone();
@@ -144,17 +145,20 @@ impl HttpResponse<HeadersSent> {
 ```
 
 With this pattern:
+
 - Calling `header()` before `status_line()` is a compile error (method doesn't exist on `HttpResponse<Start>`)
 - Calling `status_line()` twice is a compile error (first call consumes `self`)
 - After `body()` consumes the response, no further operations are possible
 
 **When to Use Typestate**:
+
 - Protocol implementations with ordered phases (handshakes, request/response cycles)
 - Builder patterns where certain fields must be set before others
 - Resource lifecycle management (open -> use -> close)
 - Workflow engines with defined state transitions
 
 **Benefits**:
+
 - Compile-time enforcement of business rules
 - Self-documenting APIs where valid operations are discoverable via IDE
 - Zero runtime overhead (states are phantom types)
@@ -162,10 +166,10 @@ With this pattern:
 
 ## 3. Workflow for Agents
 
-1.  **Plan**: Analyze requirements, module locations, and existing patterns.
-2.  **Edit**: Apply changes. Ensure you add/update tests.
-3.  **Verify**:
-    - Run `just fmt` to fix style.
-    - Run `just lint` to ensure no strict rules are violated (no unwraps!).
-    - Run `just test` to verify logic.
-4.  **Commit**: Ensure the codebase is green before declaring a task complete.
+1. **Plan**: Analyze requirements, module locations, and existing patterns.
+2. **Edit**: Apply changes. Ensure you add/update tests.
+3. **Verify**:
+   - Run `just fmt` to fix style.
+   - Run `just lint` to ensure no strict rules are violated (no unwraps!).
+   - Run `just test` to verify logic.
+4. **Commit**: Ensure the codebase is green before declaring a task complete.
