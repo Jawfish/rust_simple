@@ -1,6 +1,15 @@
 # Agent Instructions for Rust Project
 
-This repository is a strict, general-purpose single-crate Rust project. Adherence to established conventions and code quality standards is mandatory.
+This repository is a strict, single-crate Rust project. Adherence to established conventions and code quality standards is mandatory.
+
+This is a greenfield project, so we do not have to care about:
+
+- Production data
+- Backward compatibility
+- Backfill
+- Breaking changes
+
+It is cheapest to refactor now.
 
 ## 1. Operational Commands
 
@@ -156,20 +165,3 @@ With this pattern:
 - Builder patterns where certain fields must be set before others
 - Resource lifecycle management (open -> use -> close)
 - Workflow engines with defined state transitions
-
-**Benefits**:
-
-- Compile-time enforcement of business rules
-- Self-documenting APIs where valid operations are discoverable via IDE
-- Zero runtime overhead (states are phantom types)
-- Eliminates entire classes of "should never happen" bugs
-
-## 3. Workflow for Agents
-
-1. **Plan**: Analyze requirements, module locations, and existing patterns.
-2. **Edit**: Apply changes. Ensure you add/update tests.
-3. **Verify**:
-   - Run `just fmt` to fix style.
-   - Run `just lint` to ensure no strict rules are violated (no unwraps!).
-   - Run `just test` to verify logic.
-4. **Commit**: Ensure the codebase is green before declaring a task complete.
